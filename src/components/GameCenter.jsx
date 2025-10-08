@@ -562,7 +562,7 @@ const GameCenter = ({ userProfile }) => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-8">
       <div className="max-w-7xl mx-auto p-6">
         {/* Header */}
         <motion.div
@@ -573,17 +573,14 @@ const GameCenter = ({ userProfile }) => {
           <div className="w-16 h-16 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
             <GamepadIcon className="h-8 w-8 text-white" />
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Game Center</h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">Game Center</h1>
+          <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Level up your skills with gamified learning, compete in challenges, and earn rewards
           </p>
         </motion.div>
 
         {/* Navigation */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
           className="flex flex-wrap justify-center gap-2 mb-8"
         >
           {[
@@ -599,8 +596,8 @@ const GameCenter = ({ userProfile }) => {
                 onClick={() => setCurrentView(tab.id)}
                 className={`px-6 py-3 rounded-lg font-semibold flex items-center space-x-2 transition-all duration-300 ${
                   currentView === tab.id
-                    ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg'
-                    : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
+                    ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg dark:shadow-purple-900/20'
+                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700'
                 }`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -612,21 +609,141 @@ const GameCenter = ({ userProfile }) => {
           })}
         </motion.div>
 
-        {/* Content */}
-        <AnimatePresence mode="wait">
+        {/* Stats Cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* XP Card */}
+          <motion.div className="bg-gradient-to-r from-purple-500 to-blue-600 dark:from-purple-600 dark:to-blue-700 text-white p-6 rounded-2xl">
+            <div className="flex items-center justify-between mb-2">
+              <Zap className="h-6 w-6" />
+              <span className="text-2xl font-bold">{userStats.xp}</span>
+            </div>
+            <div className="text-sm opacity-90">Total XP</div>
+            <div className="text-xs opacity-75">Level {userStats.level}</div>
+          </motion.div>
+
+          {/* SkillCoins Card */}
           <motion.div
-            key={currentView}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
+            transition={{ delay: 0.1 }}
+            className="bg-gradient-to-r from-yellow-500 to-orange-600 text-white p-6 rounded-2xl"
           >
-            {currentView === 'overview' && renderOverview()}
-            {currentView === 'challenges' && renderChallenges()}
-            {currentView === 'competitions' && renderCompetitions()}
-            {currentView === 'rewards' && renderRewards()}
+            <div className="flex items-center justify-between mb-2">
+              <Coins className="h-6 w-6" />
+              <span className="text-2xl font-bold">{userStats.skillCoins}</span>
+            </div>
+            <div className="text-sm opacity-90">SkillCoins</div>
+            <div className="text-xs opacity-75">Spend in store</div>
           </motion.div>
-        </AnimatePresence>
+
+          {/* Streak Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="bg-gradient-to-r from-red-500 to-pink-600 text-white p-6 rounded-2xl"
+          >
+            <div className="flex items-center justify-between mb-2">
+              <Flame className="h-6 w-6" />
+              <span className="text-2xl font-bold">{userStats.streak}</span>
+            </div>
+            <div className="text-sm opacity-90">Day Streak</div>
+            <div className="text-xs opacity-75">Keep it up!</div>
+          </motion.div>
+
+          {/* Rank Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="bg-gradient-to-r from-green-500 to-emerald-600 text-white p-6 rounded-2xl"
+          >
+            <div className="flex items-center justify-between mb-2">
+              <Trophy className="h-6 w-6" />
+              <span className="text-2xl font-bold">#{userStats.rank}</span>
+            </div>
+            <div className="text-sm opacity-90">Global Rank</div>
+            <div className="text-xs opacity-75">Top 15%</div>
+          </motion.div>
+        </div>
+
+        {/* Challenges Section */}
+        <motion.div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white flex items-center">
+              <Target className="h-6 w-6 text-blue-500 dark:text-blue-400 mr-2" />
+              Daily Challenges
+            </h3>
+            <div className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
+              <Clock className="h-4 w-4" />
+              <span>4h 23m left</span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {dailyChallenges.map((challenge, index) => (
+              <motion.div
+                key={challenge.id}
+                className="border border-gray-200 dark:border-gray-700 rounded-xl p-4 hover:shadow-lg dark:hover:shadow-purple-900/10 transition-all duration-300 bg-white dark:bg-gray-800"
+              >
+                {/* Challenge content with dark mode classes */}
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">{challenge.title}</h4>
+                <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">{challenge.description}</p>
+                
+                <div className="mb-3">
+                  <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-300 mb-1">
+                    <span>Progress</span>
+                    <span>{challenge.progress}/{challenge.total}</span>
+                  </div>
+                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                    <motion.div 
+                      className="bg-gradient-to-r from-purple-600 to-blue-600 h-2 rounded-full"
+                      initial={{ width: 0 }}
+                      animate={{ width: `${(challenge.progress / challenge.total) * 100}%` }}
+                      transition={{ duration: 1, delay: 0.5 + index * 0.1 }}
+                    />
+                  </div>
+                </div>
+                
+                <motion.button
+                  className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-2 rounded-lg text-sm font-semibold"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  {challenge.progress === 0 ? 'Start Challenge' : 'Continue'}
+                </motion.button>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Achievements Section */}
+        <motion.div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+            <Award className="h-6 w-6 text-yellow-500 dark:text-yellow-400 mr-2" />
+            Recent Achievements
+          </h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {rewards.slice(0, 4).map((reward, index) => (
+              <motion.div
+                key={reward.id}
+                className={`p-4 rounded-xl border-2 text-center ${
+                  reward.unlocked 
+                    ? 'border-yellow-300 bg-yellow-50 dark:border-yellow-500 dark:bg-yellow-900/20' 
+                    : 'border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800/50'
+                }`}
+                // ...existing motion props...
+              >
+                {/* Reward content with dark mode classes */}
+                <h4 className={`font-semibold mb-1 ${reward.unlocked ? 'text-yellow-700 dark:text-yellow-300' : 'text-gray-600 dark:text-gray-300'}`}>
+                  {reward.name}
+                </h4>
+                <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">{reward.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </div>
   );

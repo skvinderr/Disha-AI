@@ -193,8 +193,8 @@ const SkillAssessment = ({ userProfile }) => {
         <div className="w-16 h-16 bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
           <Brain className="h-8 w-8 text-white" />
         </div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">AI-Powered Skill Assessment</h1>
-        <p className="text-gray-600 max-w-2xl mx-auto">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">AI-Powered Skill Assessment</h1>
+        <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
           Take our adaptive assessment to discover your skill level, identify gaps, and get personalized learning recommendations.
         </p>
       </motion.div>
@@ -208,17 +208,17 @@ const SkillAssessment = ({ userProfile }) => {
             transition={{ delay: index * 0.1 }}
             className="group"
           >
-            <div className="bg-white rounded-2xl p-6 border border-gray-200 hover:border-gray-300 hover:shadow-xl transition-all duration-300 cursor-pointer h-full"
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-xl transition-all duration-300 cursor-pointer h-full"
                  onClick={() => startAssessment(domain)}>
               <div className={`w-full h-32 bg-gradient-to-r ${domain.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-300`}>
                 <span className="text-4xl">{domain.icon}</span>
               </div>
               
-              <h3 className="text-xl font-bold text-gray-900 mb-2">{domain.title}</h3>
-              <p className="text-gray-600 text-sm mb-4">{domain.description}</p>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{domain.title}</h3>
+              <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{domain.description}</p>
               
-              <div className="flex items-center justify-between text-xs text-gray-500 mb-4">
-                <span className="bg-gray-100 px-2 py-1 rounded">{domain.difficulty}</span>
+              <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-4">
+                <span className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">{domain.difficulty}</span>
                 <span>{domain.questions} questions</span>
               </div>
               
@@ -242,9 +242,9 @@ const SkillAssessment = ({ userProfile }) => {
     const progress = ((currentQuestion + 1) / sampleQuestions.length) * 100;
 
     return (
-      <div className="max-w-4xl mx-auto p-6">
+      <div className="max-w-4xl mx-auto p-6 min-h-[calc(100vh-4rem)]">
         {/* Header */}
-        <div className="bg-white rounded-2xl p-6 border border-gray-200 mb-6">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 mb-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center space-x-3">
               <div className={`w-12 h-12 bg-gradient-to-r ${selectedDomain.color} rounded-xl flex items-center justify-center`}>
@@ -266,7 +266,7 @@ const SkillAssessment = ({ userProfile }) => {
             </div>
           </div>
           
-          <div className="w-full bg-gray-200 rounded-full h-2">
+          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
             <motion.div 
               className="bg-gradient-to-r from-purple-600 to-blue-600 h-2 rounded-full"
               initial={{ width: 0 }}
@@ -282,19 +282,10 @@ const SkillAssessment = ({ userProfile }) => {
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -50 }}
-          className="bg-white rounded-2xl p-8 border border-gray-200"
+          className="bg-white dark:bg-gray-800 rounded-2xl p-8 border border-gray-200 dark:border-gray-700"
         >
           <div className="mb-6">
-            <div className="flex items-center space-x-2 mb-4">
-              <div className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                question.difficulty === 'beginner' ? 'bg-green-100 text-green-700' :
-                question.difficulty === 'intermediate' ? 'bg-yellow-100 text-yellow-700' :
-                'bg-red-100 text-red-700'
-              }`}>
-                {question.difficulty}
-              </div>
-            </div>
-            <h3 className="text-2xl font-bold text-gray-900">{question.question}</h3>
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{question.question}</h3>
           </div>
           
           <div className="space-y-3">
@@ -302,17 +293,17 @@ const SkillAssessment = ({ userProfile }) => {
               <motion.button
                 key={index}
                 onClick={() => handleAnswer(index)}
-                className="w-full p-4 text-left bg-gray-50 hover:bg-gray-100 rounded-xl border border-gray-200 hover:border-gray-300 transition-all duration-200 group"
+                className="w-full p-4 text-left bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-xl border border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500 transition-all duration-200 group"
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
               >
                 <div className="flex items-center space-x-3">
-                  <div className="w-6 h-6 rounded-full border-2 border-gray-300 group-hover:border-purple-500 flex items-center justify-center">
-                    <span className="text-sm font-semibold text-gray-500 group-hover:text-purple-500">
+                  <div className="w-6 h-6 rounded-full border-2 border-gray-300 dark:border-gray-500 group-hover:border-purple-500 flex items-center justify-center">
+                    <span className="text-sm font-semibold text-gray-500 dark:text-gray-400 group-hover:text-purple-500">
                       {String.fromCharCode(65 + index)}
                     </span>
                   </div>
-                  <span className="text-gray-900 group-hover:text-purple-900">{option}</span>
+                  <span className="text-gray-900 dark:text-gray-200 group-hover:text-purple-900 dark:group-hover:text-purple-300">{option}</span>
                 </div>
               </motion.button>
             ))}
@@ -457,7 +448,7 @@ const SkillAssessment = ({ userProfile }) => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-8">
       <AnimatePresence mode="wait">
         {currentStep === 'select' && renderDomainSelection()}
         {currentStep === 'assessment' && renderAssessment()}

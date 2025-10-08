@@ -2,21 +2,20 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   BarChart3, 
+  LineChart, 
+  PieChart, 
   TrendingUp, 
-  Users, 
-  Target, 
-  Clock, 
   Award, 
-  Zap,
-  Calendar,
+  Target, 
   Brain,
-  BookOpen,
+  Users,
+  Clock,
   Trophy,
   Briefcase,
-  Eye,
   Download,
   Filter,
-  RefreshCw
+  RefreshCw,
+  Calendar,
 } from 'lucide-react';
 
 /**
@@ -105,7 +104,7 @@ const Analytics = ({ userProfile }) => {
           animate={{ opacity: 1, y: 0 }}
           className="bg-gradient-to-r from-purple-500 to-blue-600 text-white p-6 rounded-2xl"
         >
-          <Zap className="h-6 w-6 mb-2" />
+          <TrendingUp className="h-6 w-6 mb-2" />
           <div className="text-2xl font-bold">{learnerAnalytics.overview.totalXP}</div>
           <div className="text-sm opacity-90">Total XP</div>
         </motion.div>
@@ -127,7 +126,7 @@ const Analytics = ({ userProfile }) => {
           transition={{ delay: 0.2 }}
           className="bg-gradient-to-r from-blue-500 to-cyan-600 text-white p-6 rounded-2xl"
         >
-          <BookOpen className="h-6 w-6 mb-2" />
+          <Trophy className="h-6 w-6 mb-2" />
           <div className="text-2xl font-bold">{learnerAnalytics.overview.coursesCompleted}</div>
           <div className="text-sm opacity-90">Courses Done</div>
         </motion.div>
@@ -173,14 +172,14 @@ const Analytics = ({ userProfile }) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
-          className="bg-white rounded-2xl p-6 border border-gray-200"
+          className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700"
         >
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-xl font-bold text-gray-900">Weekly Activity</h3>
-            <div className="flex items-center space-x-2 text-sm text-gray-500">
-              <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white">Weekly Activity</h3>
+            <div className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
+              <div className="w-3 h-3 bg-purple-500 dark:bg-purple-400 rounded-full"></div>
               <span>Hours</span>
-              <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+              <div className="w-3 h-3 bg-blue-500 dark:bg-blue-400 rounded-full"></div>
               <span>XP</span>
             </div>
           </div>
@@ -188,29 +187,29 @@ const Analytics = ({ userProfile }) => {
           <div className="space-y-4">
             {learnerAnalytics.weeklyActivity.map((day, index) => (
               <div key={day.day} className="flex items-center space-x-4">
-                <div className="w-12 text-sm font-medium text-gray-600">{day.day}</div>
+                <div className="w-12 text-sm font-medium text-gray-600 dark:text-gray-300">{day.day}</div>
                 <div className="flex-1">
                   <div className="flex items-center space-x-2 mb-1">
-                    <div className="flex-1 bg-gray-200 rounded-full h-2">
+                    <div className="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                       <motion.div 
-                        className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full"
+                        className="bg-gradient-to-r from-purple-500 to-blue-500 dark:from-purple-400 dark:to-blue-400 h-2 rounded-full"
                         initial={{ width: 0 }}
                         animate={{ width: `${(day.hours / 5) * 100}%` }}
                         transition={{ duration: 1, delay: 0.8 + index * 0.1 }}
                       />
                     </div>
-                    <span className="text-sm text-gray-600">{day.hours}h</span>
+                    <span className="text-sm text-gray-600 dark:text-gray-300">{day.hours}h</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <div className="flex-1 bg-gray-200 rounded-full h-2">
+                    <div className="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                       <motion.div 
-                        className="bg-gradient-to-r from-blue-500 to-cyan-500 h-2 rounded-full"
+                        className="bg-gradient-to-r from-blue-500 to-cyan-500 dark:from-blue-400 dark:to-cyan-400 h-2 rounded-full"
                         initial={{ width: 0 }}
                         animate={{ width: `${(day.xp / 420) * 100}%` }}
                         transition={{ duration: 1, delay: 1 + index * 0.1 }}
                       />
                     </div>
-                    <span className="text-sm text-gray-600">{day.xp} XP</span>
+                    <span className="text-sm text-gray-600 dark:text-gray-300">{day.xp} XP</span>
                   </div>
                 </div>
               </div>
@@ -223,19 +222,19 @@ const Analytics = ({ userProfile }) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7 }}
-          className="bg-white rounded-2xl p-6 border border-gray-200"
+          className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700"
         >
-          <h3 className="text-xl font-bold text-gray-900 mb-6">Skill Proficiency</h3>
+          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6">Skill Proficiency</h3>
           
           <div className="space-y-4">
             {learnerAnalytics.skillProgress.map((skill, index) => (
               <div key={skill.skill} className="flex items-center space-x-4">
-                <div className="w-20 text-sm font-medium text-gray-900">{skill.skill}</div>
+                <div className="w-20 text-sm font-medium text-gray-900 dark:text-white">{skill.skill}</div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-1">
-                    <div className="w-full bg-gray-200 rounded-full h-3">
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
                       <motion.div 
-                        className="bg-gradient-to-r from-green-500 to-emerald-500 h-3 rounded-full flex items-center justify-end pr-2"
+                        className="bg-gradient-to-r from-green-500 to-emerald-500 dark:from-green-400 dark:to-emerald-400 h-3 rounded-full flex items-center justify-end pr-2"
                         initial={{ width: 0 }}
                         animate={{ width: `${skill.proficiency}%` }}
                         transition={{ duration: 1, delay: 0.9 + index * 0.1 }}
@@ -245,7 +244,7 @@ const Analytics = ({ userProfile }) => {
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center space-x-1 text-green-600">
+                <div className="flex items-center space-x-1 text-green-600 dark:text-green-400">
                   <TrendingUp className="h-4 w-4" />
                   <span className="text-sm font-semibold">+{skill.change}%</span>
                 </div>
@@ -260,29 +259,29 @@ const Analytics = ({ userProfile }) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8 }}
-        className="bg-white rounded-2xl p-6 border border-gray-200"
+        className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700"
       >
-        <h3 className="text-xl font-bold text-gray-900 mb-6">Learning Path Progress</h3>
+        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6">Learning Path Progress</h3>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {learnerAnalytics.learningPaths.map((path, index) => (
-            <div key={path.name} className="p-4 border border-gray-200 rounded-xl">
-              <h4 className="font-semibold text-gray-900 mb-2">{path.name}</h4>
+            <div key={path.name} className="p-4 border border-gray-200 dark:border-gray-700 rounded-xl dark:bg-gray-800">
+              <h4 className="font-semibold text-gray-900 dark:text-white mb-2">{path.name}</h4>
               <div className="mb-3">
-                <div className="flex items-center justify-between text-sm text-gray-600 mb-1">
+                <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-300 mb-1">
                   <span>Progress</span>
                   <span>{path.completed}/{path.modules} modules</span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
+                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                   <motion.div 
-                    className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full"
+                    className="bg-gradient-to-r from-purple-500 to-blue-500 dark:from-purple-400 dark:to-blue-400 h-2 rounded-full"
                     initial={{ width: 0 }}
                     animate={{ width: `${path.progress}%` }}
                     transition={{ duration: 1, delay: 1.2 + index * 0.2 }}
                   />
                 </div>
               </div>
-              <div className="text-2xl font-bold text-purple-600">{path.progress}%</div>
+              <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">{path.progress}%</div>
             </div>
           ))}
         </div>
@@ -428,20 +427,24 @@ const Analytics = ({ userProfile }) => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 
+      dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-8">
       <div className="max-w-7xl mx-auto p-6">
-        {/* Header */}
+        {/* Header Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
-          <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl 
+            flex items-center justify-center mx-auto mb-4">
             <BarChart3 className="h-8 w-8 text-white" />
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Analytics Dashboard</h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Comprehensive insights for learners and recruiters with real-time data and trends
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+            Skill Analytics
+          </h1>
+          <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            Track your progress, analyze skill growth, and identify areas for improvement
           </p>
         </motion.div>
 

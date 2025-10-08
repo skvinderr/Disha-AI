@@ -10,13 +10,37 @@ import {
   Award,
   Coins,
   Zap,
-  User
+  User,
+  Moon,
+  Sun
 } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 /**
  * Enhanced Navigation Component with Gamification Elements
  */
 const Navigation = ({ currentView, onViewChange, userProfile }) => {
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    setDarkMode(savedTheme === 'dark');
+    if (savedTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    setDarkMode(!darkMode);
+    if (!darkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  };
+
   const navigationItems = [
     { id: 'dashboard', label: 'Dashboard', icon: Home, color: 'blue' },
     { id: 'assessment', label: 'Skill Assessment', icon: Brain, color: 'purple' },
@@ -42,28 +66,28 @@ const Navigation = ({ currentView, onViewChange, userProfile }) => {
     <motion.nav 
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-lg border-b border-gray-200/50 shadow-lg"
+      className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/90 backdrop-blur-lg border-b border-gray-200/50 dark:border-gray-700/50 shadow-lg"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center h-16">
-          {/* Logo & Brand - Fixed width */}
+      <div className="container mx-auto px-2 sm:px-4 lg:px-6 min-w-[1024px]"> {/* Modified container */}
+        <div className="flex items-center justify-between h-16 relative"> {/* Added relative positioning */}
+          {/* Logo & Brand - Made more compact */}
           <motion.div 
-            className="flex items-center space-x-3 w-64 flex-shrink-0"
+            className="flex items-center space-x-2 flex-shrink-0 w-48" // Added flex-shrink-0 and fixed width
             whileHover={{ scale: 1.05 }}
           >
             <div className="w-10 h-10 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl flex items-center justify-center">
               <Zap className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent leading-none">
+              <h1 className="text-sm font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent leading-none">
                 Disha AI
               </h1>
-              <p className="text-xs text-gray-500 leading-none mt-0.5">Career & Skill Advisor</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400 leading-none mt-0.5">Career & Skill Advisor</p>
             </div>
           </motion.div>
 
-          {/* Navigation Items - Centered */}
-          <div className="hidden md:flex items-center space-x-1 flex-1 justify-center">
+          {/* Navigation Items - Better space management */}
+          <div className="hidden lg:flex items-center space-x-1 flex-1 justify-center mx-2"> {/* Adjusted breakpoint and spacing */}
             {navigationItems.map((item) => {
               const Icon = item.icon;
               const isActive = currentView === item.id;
@@ -73,10 +97,10 @@ const Navigation = ({ currentView, onViewChange, userProfile }) => {
                   key={item.id}
                   onClick={() => onViewChange(item.id)}
                   className={`
-                    px-3 py-2 rounded-lg border transition-all duration-200 flex items-center space-x-1 text-sm
+                    px-3 py-2 rounded-lg border transition-all duration-200 flex items-center space-x-1.5 text-sm
                     ${isActive 
                       ? colorClasses[item.color] + ' shadow-md'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50 border-transparent'
+                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 border-transparent'
                     }
                   `}
                   whileHover={{ scale: 1.05 }}
@@ -89,52 +113,67 @@ const Navigation = ({ currentView, onViewChange, userProfile }) => {
             })}
           </div>
 
-          {/* Gamification Stats - Fixed width */}
-          <div className="flex items-center space-x-4 w-64 justify-end flex-shrink-0">
-            {/* XP and Level */}
+          {/* Right Section: Stats & Profile - Prevent shrinking */}
+          <div className="flex items-center space-x-2 flex-shrink-0"> {/* Added flex-shrink-0 */}
+            {/* XP and Level - Adjusted visibility */}
             <motion.div 
-              className="hidden sm:flex items-center space-x-3 bg-gradient-to-r from-purple-100 to-blue-100 px-4 py-2 rounded-lg"
+              className="hidden lg:flex items-center space-x-2" // Changed breakpoint
               whileHover={{ scale: 1.05 }}
             >
               <div className="flex items-center space-x-1">
-                <Zap className="h-4 w-4 text-purple-600" />
-                <span className="text-sm font-bold text-purple-600">
+                <Zap className="h-4 w-4 text-purple-600 dark:text-purple-400" />
+                <span className="text-sm font-bold text-purple-600 dark:text-purple-400">
                   {userProfile?.xp || 0} XP
                 </span>
               </div>
-              <div className="w-px h-4 bg-gray-300"></div>
+              <div className="w-px h-4 bg-gray-300 dark:bg-gray-600"></div>
               <div className="flex items-center space-x-1">
-                <span className="text-xs text-gray-500">Level</span>
-                <span className="text-sm font-bold text-blue-600">
+                <span className="text-xs text-gray-500 dark:text-gray-400">Level</span>
+                <span className="text-sm font-bold text-blue-600 dark:text-blue-400">
                   {Math.floor((userProfile?.xp || 0) / 100) + 1}
                 </span>
               </div>
             </motion.div>
 
-            {/* SkillCoins */}
+            {/* SkillCoins - Always visible */}
             <motion.div 
-              className="flex items-center space-x-1 bg-gradient-to-r from-yellow-100 to-orange-100 px-3 py-2 rounded-lg"
+              className="flex items-center space-x-1"
               whileHover={{ scale: 1.05 }}
             >
-              <Coins className="h-4 w-4 text-yellow-600" />
-              <span className="text-sm font-bold text-yellow-600">
+              <Coins className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
+              <span className="text-sm font-bold text-yellow-600 dark:text-yellow-400">
                 {userProfile?.skillCoins || 0}
               </span>
             </motion.div>
 
-            {/* Profile */}
-            <motion.button
-              className="w-8 h-8 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full flex items-center justify-center"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <User className="h-4 w-4 text-white" />
-            </motion.button>
+            {/* Theme and Profile - Always visible */}
+            <div className="flex items-center space-x-2 ml-2"> {/* Separate container with margin */}
+              <motion.button
+                onClick={toggleTheme}
+                className="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                {darkMode ? (
+                  <Sun className="h-4 w-4 text-yellow-500" />
+                ) : (
+                  <Moon className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                )}
+              </motion.button>
+
+              <motion.button
+                className="w-8 h-8 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full flex items-center justify-center"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <User className="h-4 w-4 text-white" />
+              </motion.button>
+            </div>
           </div>
         </div>
 
-        {/* Mobile Navigation */}
-        <div className="md:hidden pb-4">
+        {/* Mobile Navigation - Better padding */}
+        <div className="lg:hidden py-2"> {/* Adjusted breakpoint and padding */}
           <div className="flex flex-wrap gap-2">
             {navigationItems.map((item) => {
               const Icon = item.icon;

@@ -479,30 +479,23 @@ const Leaderboard = ({ userProfile }) => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-orange-50 to-red-50 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-orange-50 to-red-50 
+    dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-8">
       <div className="max-w-7xl mx-auto p-6">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-8"
-        >
-          <div className="w-16 h-16 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+        <motion.div className="text-center mb-8">
+          <div className="w-16 h-16 bg-gradient-to-r from-yellow-500 to-orange-600 
+          dark:from-yellow-600 dark:to-orange-700 rounded-2xl flex items-center justify-center mx-auto mb-4">
             <Trophy className="h-8 w-8 text-white" />
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Global Leaderboard</h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">Global Leaderboard</h1>
+          <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Compete with learners worldwide, join hackathons, and climb the rankings
           </p>
         </motion.div>
 
-        {/* Navigation */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-2 mb-8"
-        >
+        {/* Navigation Tabs */}
+        <motion.div className="flex flex-wrap justify-center gap-2 mb-8">
           {[
             { id: 'global', label: 'Global Rankings', icon: Globe },
             { id: 'skills', label: 'Skill Leaders', icon: Star },
@@ -516,8 +509,8 @@ const Leaderboard = ({ userProfile }) => {
                 onClick={() => setCurrentView(tab.id)}
                 className={`px-6 py-3 rounded-lg font-semibold flex items-center space-x-2 transition-all duration-300 ${
                   currentView === tab.id
-                    ? 'bg-gradient-to-r from-yellow-500 to-orange-600 text-white shadow-lg'
-                    : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
+                    ? 'bg-gradient-to-r from-yellow-500 to-orange-600 dark:from-yellow-600 dark:to-orange-700 text-white shadow-lg'
+                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700'
                 }`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -529,50 +522,53 @@ const Leaderboard = ({ userProfile }) => {
           })}
         </motion.div>
 
-        {/* Filters */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="flex items-center justify-between mb-8"
-        >
-          <div className="flex items-center space-x-4">
+        {/* Filters and Search */}
+        <motion.div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+          <div className="flex flex-wrap items-center gap-4">
             <select
               value={timeRange}
               onChange={(e) => setTimeRange(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+              className="px-4 py-2 rounded-lg bg-white dark:bg-gray-800 
+                border border-gray-200 dark:border-gray-700
+                text-gray-900 dark:text-white
+                focus:ring-2 focus:ring-yellow-500 dark:focus:ring-yellow-600"
             >
               <option value="weekly">This Week</option>
               <option value="monthly">This Month</option>
               <option value="yearly">This Year</option>
               <option value="alltime">All Time</option>
             </select>
-            
-            {currentView === 'skills' && (
-              <select
-                value={skillFilter}
-                onChange={(e) => setSkillFilter(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-              >
-                <option value="all">All Skills</option>
-                <option value="React">React</option>
-                <option value="Python">Python</option>
-                <option value="AI/ML">AI/ML</option>
-              </select>
-            )}
+
+            <select
+              value={skillFilter}
+              onChange={(e) => setSkillFilter(e.target.value)}
+              className="px-4 py-2 rounded-lg bg-white dark:bg-gray-800 
+                border border-gray-200 dark:border-gray-700
+                text-gray-900 dark:text-white
+                focus:ring-2 focus:ring-yellow-500 dark:focus:ring-yellow-600"
+            >
+              <option value="all">All Skills</option>
+              <option value="frontend">Frontend</option>
+              <option value="backend">Backend</option>
+              <option value="mobile">Mobile</option>
+            </select>
           </div>
-          
-          <div className="flex items-center space-x-2">
-            <div className="relative">
-              <Search className="h-4 w-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Search users..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-              />
-            </div>
+
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search learners..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10 pr-4 py-2 w-64 rounded-lg
+                bg-white dark:bg-gray-800
+                border border-gray-200 dark:border-gray-700
+                text-gray-900 dark:text-white
+                placeholder-gray-500 dark:placeholder-gray-400
+                focus:ring-2 focus:ring-yellow-500 dark:focus:ring-yellow-600"
+            />
+            <Search className="h-5 w-5 absolute left-3 top-1/2 -translate-y-1/2 
+              text-gray-400 dark:text-gray-500" />
           </div>
         </motion.div>
 

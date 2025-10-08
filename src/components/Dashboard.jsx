@@ -232,19 +232,19 @@ const Dashboard = ({ userProfile, onEditProfile }) => {
 
   // Show the dashboard directly since we have the profile
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100">
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen flex flex-col overflow-x-hidden bg-fixed bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 
+      dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 overflow-y-auto">
+      <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
             Your Career Journey Awaits
           </h1>
-          <p className="text-gray-600">
+          <p className="text-gray-600 dark:text-gray-300">
             Explore personalized career recommendations and build your skill roadmap.
           </p>
         </motion.div>
@@ -253,16 +253,47 @@ const Dashboard = ({ userProfile, onEditProfile }) => {
           {/* Career Recommendations Section */}
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-3 mb-6">
-              <div className="bg-primary-100 p-2 rounded-lg">
-                <TrendingUp className="h-5 w-5 text-primary-600" />
+              <div className="bg-primary-100 dark:bg-primary-900/20 p-2 rounded-lg">
+                <TrendingUp className="h-5 w-5 text-primary-600 dark:text-primary-400" />
               </div>
-              <h2 className="text-xl font-semibold text-gray-900">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
                 Your Recommended Career Paths
               </h2>
             </div>
 
-            {!mockRecommendations && !currentProfile?.careerRecommendations && renderEmptyState()}
-            
+            {/* Empty State */}
+            {!mockRecommendations && !currentProfile?.careerRecommendations && (
+              <motion.div className="text-center py-12">
+                <div className="bg-primary-100 dark:bg-primary-900/20 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <Sparkles className="h-10 w-10 text-primary-600 dark:text-primary-400" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                  Ready to discover your perfect career?
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-md mx-auto">
+                  Let our AI analyze your profile and recommend career paths tailored specifically for you.
+                </p>
+                <button
+                  onClick={handleGenerateRecommendations}
+                  disabled={isGeneratingRecommendations}
+                  className="btn-primary dark:bg-primary-600 dark:hover:bg-primary-700 inline-flex items-center space-x-2"
+                >
+                  {isGeneratingRecommendations ? (
+                    <>
+                      <RefreshCw className="h-5 w-5 animate-spin" />
+                      <span>Analyzing Your Profile...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles className="h-5 w-5" />
+                      <span>Generate Career Recommendations</span>
+                    </>
+                  )}
+                </button>
+              </motion.div>
+            )}
+
+            {/* Recommendations Grid */}
             {(mockRecommendations || currentProfile?.careerRecommendations) && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -280,6 +311,7 @@ const Dashboard = ({ userProfile, onEditProfile }) => {
               </motion.div>
             )}
 
+            {/* Refresh Button */}
             {(mockRecommendations || currentProfile?.careerRecommendations) && (
               <motion.div
                 initial={{ opacity: 0 }}
@@ -315,7 +347,7 @@ const Dashboard = ({ userProfile, onEditProfile }) => {
         </div>
       </main>
 
-      {/* Roadmap Modal */}
+      {/* Roadmap Modal will inherit dark mode from parent */}
       {showRoadmapModal && selectedCareer && (
         <RoadmapModal
           career={selectedCareer}

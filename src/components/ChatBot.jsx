@@ -206,10 +206,10 @@ What would you like to explore first?`
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-purple-600 to-blue-600 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+            className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-500 dark:to-blue-500 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
           >
             <MessageCircle className="h-6 w-6" />
-            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center animate-pulse">
+            <span className="absolute -top-2 -right-2 bg-red-500 dark:bg-red-400 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center animate-pulse">
               !
             </span>
           </motion.button>
@@ -227,13 +227,13 @@ What would you like to explore first?`
               scale: 1
             }}
             exit={{ opacity: 0, y: 100, scale: 0.8 }}
-            className={`fixed bottom-6 right-6 z-50 bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden flex flex-col ${
+            className={`fixed bottom-6 right-6 z-50 bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col ${
               isMinimized ? 'h-auto' : 'h-[600px]'
             }`}
             style={{ width: '380px' }}
           >
             {/* Chat Header */}
-            <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-4">
+            <div className="bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-500 dark:to-blue-500 text-white p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <div className="relative">
@@ -302,15 +302,15 @@ What would you like to explore first?`
                       <div className={`flex items-start space-x-2 max-w-[280px] ${message.type === 'user' ? 'flex-row-reverse space-x-reverse' : ''}`}>
                         <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
                           message.type === 'user' 
-                            ? 'bg-blue-500 text-white' 
-                            : 'bg-gradient-to-r from-purple-500 to-blue-500 text-white'
+                            ? 'bg-blue-500 dark:bg-blue-600 text-white' 
+                            : 'bg-gradient-to-r from-purple-500 to-blue-500 dark:from-purple-600 dark:to-blue-600 text-white'
                         }`}>
                           {message.type === 'user' ? <User className="h-4 w-4" /> : <Bot className="h-4 w-4" />}
                         </div>
                         <div className={`p-3 rounded-2xl ${
                           message.type === 'user'
-                            ? 'bg-blue-500 text-white rounded-tr-md'
-                            : 'bg-gray-100 text-gray-800 rounded-tl-md'
+                            ? 'bg-blue-500 dark:bg-blue-600 text-white rounded-tr-md'
+                            : 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-tl-md'
                         }`}>
                           <p className="text-sm whitespace-pre-line">{message.content}</p>
                           <p className="text-xs mt-1 opacity-70">
@@ -321,16 +321,17 @@ What would you like to explore first?`
                     </motion.div>
                   ))}
 
+                  {/* Typing Indicator */}
                   {isTyping && (
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       className="flex items-start space-x-2"
                     >
-                      <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center">
+                      <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 dark:from-purple-600 dark:to-blue-600 rounded-full flex items-center justify-center">
                         <Bot className="h-4 w-4 text-white" />
                       </div>
-                      <div className="bg-gray-100 p-3 rounded-2xl rounded-tl-md">
+                      <div className="bg-gray-100 dark:bg-gray-800 p-3 rounded-2xl rounded-tl-md">
                         <div className="flex space-x-1">
                           <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
                           <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
@@ -345,13 +346,17 @@ What would you like to explore first?`
                 {/* Quick Suggestions */}
                 {messages.length === 1 && (
                   <div className="px-4 pb-2">
-                    <p className="text-xs text-gray-500 mb-2">Try asking:</p>
+                    <p className="text-xs text-gray-600 dark:text-gray-300 mb-2">Try asking:</p>
                     <div className="grid grid-cols-2 gap-2">
                       {quickSuggestions.map((suggestion, index) => (
                         <button
                           key={index}
                           onClick={() => handleQuickSuggestion(suggestion)}
-                          className="text-xs text-left p-2 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors border border-gray-200"
+                          className="text-xs text-left p-2 bg-gray-50 dark:bg-gray-800 
+                            text-gray-800 dark:text-gray-200 
+                            hover:bg-gray-100 dark:hover:bg-gray-700 
+                            rounded-lg transition-colors 
+                            border border-gray-200 dark:border-gray-700"
                         >
                           {suggestion}
                         </button>
@@ -361,7 +366,7 @@ What would you like to explore first?`
                 )}
 
                 {/* Chat Input */}
-                <div className="p-4 border-t border-gray-200">
+                <div className="p-4 border-t border-gray-200 dark:border-gray-700">
                   <div className="flex space-x-2">
                     <input
                       type="text"
@@ -369,18 +374,18 @@ What would you like to explore first?`
                       onChange={(e) => setInputMessage(e.target.value)}
                       onKeyPress={handleKeyPress}
                       placeholder="Ask me about your career..."
-                      className="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm"
+                      className="flex-1 p-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                     />
                     <button
                       onClick={handleSendMessage}
                       disabled={!inputMessage.trim()}
-                      className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-2 rounded-lg hover:from-purple-700 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                      className="bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-500 dark:to-blue-500 text-white p-2 rounded-lg hover:from-purple-700 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
                     >
                       <Send className="h-4 w-4" />
                     </button>
                   </div>
                 </div>
-                <Footer variant="minimal" className="text-center border-t border-gray-100" />
+                <Footer variant="minimal" className="text-center border-t border-gray-100 dark:border-gray-800" />
               </div>
             )}
           </motion.div>

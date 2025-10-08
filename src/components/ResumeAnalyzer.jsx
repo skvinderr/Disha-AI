@@ -124,8 +124,8 @@ const ResumeAnalyzer = ({ userProfile }) => {
         <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
           <FileText className="h-8 w-8 text-white" />
         </div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">AI Resume Analyzer</h1>
-        <p className="text-gray-600 max-w-2xl mx-auto">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">AI Resume Analyzer</h1>
+        <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
           Get instant AI-powered feedback on your resume with skill gap analysis and improvement suggestions
         </p>
       </motion.div>
@@ -137,8 +137,8 @@ const ResumeAnalyzer = ({ userProfile }) => {
         transition={{ delay: 0.2 }}
         className={`relative border-2 border-dashed rounded-2xl p-12 text-center transition-all duration-300 ${
           dragActive 
-            ? 'border-purple-400 bg-purple-50' 
-            : 'border-gray-300 hover:border-purple-400 hover:bg-gray-50'
+            ? 'border-purple-400 bg-purple-50 dark:border-purple-500 dark:bg-purple-900/20' 
+            : 'border-gray-300 dark:border-gray-700 hover:border-purple-400 dark:hover:border-purple-500 hover:bg-gray-50 dark:hover:bg-gray-800/50'
         }`}
         onDragEnter={handleDrag}
         onDragLeave={handleDrag}
@@ -155,32 +155,25 @@ const ResumeAnalyzer = ({ userProfile }) => {
         <div className="space-y-4">
           <motion.div
             className={`w-20 h-20 mx-auto rounded-2xl flex items-center justify-center ${
-              dragActive ? 'bg-purple-200' : 'bg-gray-100'
+              dragActive ? 'bg-purple-200 dark:bg-purple-800' : 'bg-gray-100 dark:bg-gray-800'
             }`}
-            animate={{ scale: dragActive ? 1.1 : 1 }}
           >
-            <Upload className={`h-10 w-10 ${dragActive ? 'text-purple-600' : 'text-gray-500'}`} />
+            <Upload className={`h-10 w-10 ${
+              dragActive ? 'text-purple-600 dark:text-purple-400' : 'text-gray-500 dark:text-gray-400'
+            }`} />
           </motion.div>
           
           <div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
               {dragActive ? 'Drop your resume here' : 'Upload your resume'}
             </h3>
-            <p className="text-gray-600 mb-4">
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
               Drag and drop your resume or click to browse
             </p>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-gray-500 dark:text-gray-400">
               Supports PDF, DOC, and DOCX files (max 10MB)
             </p>
           </div>
-          
-          <motion.button
-            className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-3 rounded-lg font-semibold"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Choose File
-          </motion.button>
         </div>
       </motion.div>
 
@@ -191,22 +184,28 @@ const ResumeAnalyzer = ({ userProfile }) => {
         transition={{ delay: 0.4 }}
         className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12"
       >
-        <div className="text-center p-6 bg-white rounded-xl border border-gray-200">
-          <Brain className="h-8 w-8 text-purple-600 mx-auto mb-3" />
-          <h4 className="font-semibold text-gray-900 mb-2">AI-Powered Analysis</h4>
-          <p className="text-sm text-gray-600">Advanced AI extracts and analyzes your skills, experience, and achievements</p>
+        <div className="text-center p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+          <Brain className="h-8 w-8 text-purple-600 dark:text-purple-400 mx-auto mb-3" />
+          <h4 className="font-semibold text-gray-900 dark:text-white mb-2">AI-Powered Analysis</h4>
+          <p className="text-sm text-gray-600 dark:text-gray-300">
+            Advanced AI extracts and analyzes your skills, experience, and achievements
+          </p>
         </div>
         
-        <div className="text-center p-6 bg-white rounded-xl border border-gray-200">
+        <div className="text-center p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
           <Target className="h-8 w-8 text-blue-600 mx-auto mb-3" />
-          <h4 className="font-semibold text-gray-900 mb-2">Skill Gap Analysis</h4>
-          <p className="text-sm text-gray-600">Identify missing skills and get recommendations for career advancement</p>
+          <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Skill Gap Analysis</h4>
+          <p className="text-sm text-gray-600 dark:text-gray-300">
+            Identify missing skills and get recommendations for career advancement
+          </p>
         </div>
         
-        <div className="text-center p-6 bg-white rounded-xl border border-gray-200">
+        <div className="text-center p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
           <TrendingUp className="h-8 w-8 text-green-600 mx-auto mb-3" />
-          <h4 className="font-semibold text-gray-900 mb-2">ATS Optimization</h4>
-          <p className="text-sm text-gray-600">Ensure your resume passes Applicant Tracking Systems</p>
+          <h4 className="font-semibold text-gray-900 dark:text-white mb-2">ATS Optimization</h4>
+          <p className="text-sm text-gray-600 dark:text-gray-300">
+            Ensure your resume passes Applicant Tracking Systems
+          </p>
         </div>
       </motion.div>
     </div>
@@ -229,8 +228,12 @@ const ResumeAnalyzer = ({ userProfile }) => {
           </motion.div>
         </div>
         
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Analyzing Your Resume</h2>
-        <p className="text-gray-600 mb-8">Our AI is extracting skills, analyzing content, and generating insights...</p>
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+          Analyzing Your Resume
+        </h2>
+        <p className="text-gray-600 dark:text-gray-300 mb-8">
+          Our AI is extracting skills, analyzing content, and generating insights...
+        </p>
         
         <div className="space-y-4 max-w-md mx-auto">
           {[
@@ -270,8 +273,12 @@ const ResumeAnalyzer = ({ userProfile }) => {
         <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
           <Award className="h-8 w-8 text-white" />
         </div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Resume Analysis Complete</h1>
-        <p className="text-gray-600">Here's your comprehensive resume analysis and improvement roadmap</p>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+          Resume Analysis Complete
+        </h1>
+        <p className="text-gray-600 dark:text-gray-300">
+          Here's your comprehensive resume analysis and improvement roadmap
+        </p>
       </motion.div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -281,7 +288,7 @@ const ResumeAnalyzer = ({ userProfile }) => {
           animate={{ opacity: 1, x: 0 }}
           className="lg:col-span-1"
         >
-          <div className="bg-white rounded-2xl p-6 border border-gray-200 text-center">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 text-center">
             <div className="w-32 h-32 mx-auto relative mb-4">
               <svg className="w-32 h-32 transform -rotate-90" viewBox="0 0 100 100">
                 <circle cx="50" cy="50" r="40" stroke="#e5e7eb" strokeWidth="8" fill="none" />
@@ -305,11 +312,11 @@ const ResumeAnalyzer = ({ userProfile }) => {
                 </defs>
               </svg>
               <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-3xl font-bold text-gray-900">{analysisResults.overallScore}</span>
+                <span className="text-3xl font-bold text-gray-900 dark:text-white">{analysisResults.overallScore}</span>
               </div>
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Overall Score</h3>
-            <p className="text-gray-600 mb-4">
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Overall Score</h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
               {analysisResults.overallScore >= 80 ? 'Excellent' : 
                analysisResults.overallScore >= 60 ? 'Good' : 'Needs Improvement'}
             </p>
@@ -339,38 +346,38 @@ const ResumeAnalyzer = ({ userProfile }) => {
           className="lg:col-span-2 space-y-6"
         >
           {/* Skills Analysis */}
-          <div className="bg-white rounded-2xl p-6 border border-gray-200">
-            <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+            <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
               <Zap className="h-5 w-5 text-blue-500 mr-2" />
               Extracted Skills
             </h4>
             <div className="grid grid-cols-2 gap-4">
               {analysisResults.extractedSkills.map((skill, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                   <div className="flex items-center space-x-2">
-                    <span className="font-medium text-gray-900">{skill.name}</span>
+                    <span className="font-medium text-gray-900 dark:text-white">{skill.name}</span>
                     {skill.inDemand && <Star className="h-4 w-4 text-yellow-500" />}
                   </div>
-                  <div className="text-sm text-gray-600">{skill.proficiency}%</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300">{skill.proficiency}%</div>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Missing Skills */}
-          <div className="bg-white rounded-2xl p-6 border border-gray-200">
-            <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+            <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
               <Target className="h-5 w-5 text-orange-500 mr-2" />
               Recommended Skills to Add
             </h4>
             <div className="grid grid-cols-2 gap-4">
               {analysisResults.missingSkills.map((skill, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
+                <div key={index} className="flex items-center justify-between p-3 bg-orange-50 dark:bg-orange-900 rounded-lg">
                   <div>
-                    <span className="font-medium text-gray-900">{skill.name}</span>
-                    <div className="text-xs text-orange-600">{skill.category}</div>
+                    <span className="font-medium text-gray-900 dark:text-white">{skill.name}</span>
+                    <div className="text-xs text-orange-600 dark:text-orange-300">{skill.category}</div>
                   </div>
-                  <div className="text-sm text-orange-700 font-semibold">{skill.demand}% demand</div>
+                  <div className="text-sm text-orange-700 dark:text-orange-200 font-semibold">{skill.demand}% demand</div>
                 </div>
               ))}
             </div>
@@ -378,8 +385,8 @@ const ResumeAnalyzer = ({ userProfile }) => {
 
           {/* Strengths & Weaknesses */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white rounded-2xl p-6 border border-gray-200">
-              <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+              <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
                 <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
                 Strengths
               </h4>
@@ -387,14 +394,14 @@ const ResumeAnalyzer = ({ userProfile }) => {
                 {analysisResults.strengths.map((strength, index) => (
                   <li key={index} className="flex items-start space-x-2">
                     <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-gray-700">{strength}</span>
+                    <span className="text-sm text-gray-700 dark:text-gray-300">{strength}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="bg-white rounded-2xl p-6 border border-gray-200">
-              <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+              <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
                 <AlertTriangle className="h-5 w-5 text-yellow-500 mr-2" />
                 Areas to Improve
               </h4>
@@ -402,7 +409,7 @@ const ResumeAnalyzer = ({ userProfile }) => {
                 {analysisResults.weaknesses.map((weakness, index) => (
                   <li key={index} className="flex items-start space-x-2">
                     <AlertTriangle className="h-4 w-4 text-yellow-500 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-gray-700">{weakness}</span>
+                    <span className="text-sm text-gray-700 dark:text-gray-300">{weakness}</span>
                   </li>
                 ))}
               </ul>
@@ -410,18 +417,18 @@ const ResumeAnalyzer = ({ userProfile }) => {
           </div>
 
           {/* Recommendations */}
-          <div className="bg-white rounded-2xl p-6 border border-gray-200">
-            <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+            <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
               <Brain className="h-5 w-5 text-purple-500 mr-2" />
               AI Recommendations
             </h4>
             <div className="space-y-3">
               {analysisResults.recommendations.map((rec, index) => (
-                <div key={index} className="flex items-start space-x-3 p-3 bg-purple-50 rounded-lg">
-                  <div className="w-6 h-6 bg-purple-200 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-xs font-bold text-purple-700">{index + 1}</span>
+                <div key={index} className="flex items-start space-x-3 p-3 bg-purple-50 dark:bg-purple-900 rounded-lg">
+                  <div className="w-6 h-6 bg-purple-200 dark:bg-purple-800 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="text-xs font-bold text-purple-700 dark:text-purple-300">{index + 1}</span>
                   </div>
-                  <span className="text-gray-700">{rec}</span>
+                  <span className="text-gray-700 dark:text-gray-300">{rec}</span>
                 </div>
               ))}
             </div>
@@ -463,7 +470,7 @@ const ResumeAnalyzer = ({ userProfile }) => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-8">
       <AnimatePresence mode="wait">
         {currentStep === 'upload' && renderUpload()}
         {currentStep === 'analyzing' && renderAnalyzing()}

@@ -254,13 +254,14 @@ const Achievements = ({ userProfile }) => {
         onClick={() => openAchievementModal(achievement)}
         className={`relative p-6 rounded-2xl border-2 cursor-pointer transition-all duration-300 ${
           isUnlocked 
-            ? 'bg-white border-gray-200 shadow-lg hover:shadow-xl' 
-            : 'bg-gray-50 border-gray-200 opacity-75'
+            ? 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl dark:shadow-purple-900/10' 
+            : 'bg-gray-50 dark:bg-gray-800/50 border-gray-200 dark:border-gray-700 opacity-75'
         }`}
       >
         {/* Rarity Glow Effect */}
         {isUnlocked && (
-          <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${getRarityColor(achievement.rarity)} opacity-10`} />
+          <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${getRarityColor(achievement.rarity)} 
+            opacity-10 dark:opacity-20`} />
         )}
         
         {/* Special Badge */}
@@ -286,10 +287,14 @@ const Achievements = ({ userProfile }) => {
           
           {/* Content */}
           <div>
-            <h3 className={`text-lg font-bold mb-2 ${isUnlocked ? 'text-gray-900' : 'text-gray-500'}`}>
+            <h3 className={`text-lg font-bold mb-2 ${
+              isUnlocked ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'
+            }`}>
               {achievement.name}
             </h3>
-            <p className={`text-sm mb-3 ${isUnlocked ? 'text-gray-600' : 'text-gray-400'}`}>
+            <p className={`text-sm mb-3 ${
+              isUnlocked ? 'text-gray-600 dark:text-gray-300' : 'text-gray-400 dark:text-gray-500'
+            }`}>
               {achievement.description}
             </p>
             
@@ -311,9 +316,9 @@ const Achievements = ({ userProfile }) => {
                   <span>Progress</span>
                   <span>{achievement.progress}%</span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
+                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                   <div 
-                    className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
+                    className="bg-gradient-to-r from-blue-500 to-purple-500 dark:from-blue-400 dark:to-purple-400 h-2 rounded-full"
                     style={{ width: `${achievement.progress}%` }}
                   />
                 </div>
@@ -337,7 +342,8 @@ const Achievements = ({ userProfile }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50 
+      dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-8">
       <div className="max-w-7xl mx-auto p-6">
         {/* Header */}
         <motion.div
@@ -345,60 +351,51 @@ const Achievements = ({ userProfile }) => {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
-          <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-600 
+            dark:from-purple-600 dark:to-pink-700 rounded-2xl flex items-center justify-center mx-auto mb-4">
             <Trophy className="h-8 w-8 text-white" />
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Achievements</h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">Achievements</h1>
+          <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Unlock badges and earn points by completing challenges and reaching milestones
           </p>
         </motion.div>
 
         {/* Stats Overview */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
-        >
-          <div className="bg-white rounded-2xl p-6 border border-gray-200 text-center">
+        <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 text-center">
             <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center mx-auto mb-4">
               <Trophy className="h-6 w-6 text-white" />
             </div>
-            <div className="text-2xl font-bold text-gray-900 mb-1">{unlockedAchievements}/{totalAchievements}</div>
-            <div className="text-sm text-gray-600">Achievements Unlocked</div>
+            <div className="text-2xl font-bold text-gray-900 dark:text-white mb-1">{unlockedAchievements}/{totalAchievements}</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">Achievements Unlocked</div>
           </div>
           
-          <div className="bg-white rounded-2xl p-6 border border-gray-200 text-center">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 text-center">
             <div className="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-xl flex items-center justify-center mx-auto mb-4">
               <Star className="h-6 w-6 text-white" />
             </div>
-            <div className="text-2xl font-bold text-gray-900 mb-1">{totalPoints.toLocaleString()}</div>
-            <div className="text-sm text-gray-600">Achievement Points</div>
+            <div className="text-2xl font-bold text-gray-900 dark:text-white mb-1">{totalPoints.toLocaleString()}</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">Achievement Points</div>
           </div>
           
-          <div className="bg-white rounded-2xl p-6 border border-gray-200 text-center">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 text-center">
             <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-teal-500 rounded-xl flex items-center justify-center mx-auto mb-4">
               <TrendingUp className="h-6 w-6 text-white" />
             </div>
-            <div className="text-2xl font-bold text-gray-900 mb-1">{Math.round((unlockedAchievements / totalAchievements) * 100)}%</div>
-            <div className="text-sm text-gray-600">Completion Rate</div>
+            <div className="text-2xl font-bold text-gray-900 dark:text-white mb-1">{Math.round((unlockedAchievements / totalAchievements) * 100)}%</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">Completion Rate</div>
           </div>
         </motion.div>
 
         {/* Category Filters */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="flex flex-wrap justify-center gap-2 mb-8"
-        >
+        <motion.div className="flex flex-wrap justify-center gap-2 mb-8">
           <motion.button
             onClick={() => setCurrentCategory('all')}
             className={`px-6 py-3 rounded-lg font-semibold flex items-center space-x-2 transition-all duration-300 ${
               currentCategory === 'all'
-                ? 'bg-gradient-to-r from-purple-500 to-pink-600 text-white shadow-lg'
-                : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
+                ? 'bg-gradient-to-r from-purple-500 to-pink-600 dark:from-purple-600 dark:to-pink-700 text-white shadow-lg dark:shadow-purple-900/20'
+                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700'
             }`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -416,7 +413,7 @@ const Achievements = ({ userProfile }) => {
                 className={`px-6 py-3 rounded-lg font-semibold flex items-center space-x-2 transition-all duration-300 ${
                   currentCategory === key
                     ? `bg-gradient-to-r from-${category.color}-500 to-${category.color}-600 text-white shadow-lg`
-                    : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
+                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700'
                 }`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -455,14 +452,15 @@ const Achievements = ({ userProfile }) => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setShowModal(false)}
-              className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+              className="fixed inset-0 bg-black bg-opacity-50 dark:bg-opacity-60 flex items-center justify-center p-4 z-50"
             >
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 onClick={(e) => e.stopPropagation()}
-                className="bg-white rounded-2xl p-8 max-w-md w-full border-2 border-gray-200"
+                className="bg-white dark:bg-gray-800 rounded-2xl p-8 max-w-md w-full border-2 
+                  border-gray-200 dark:border-gray-700"
               >
                 <div className="text-center">
                   {/* Achievement Icon */}
@@ -479,8 +477,12 @@ const Achievements = ({ userProfile }) => {
                   </div>
                   
                   {/* Achievement Details */}
-                  <h2 className="text-2xl font-bold text-gray-900 mb-2">{selectedAchievement.name}</h2>
-                  <p className="text-gray-600 mb-4">{selectedAchievement.description}</p>
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                    {selectedAchievement.name}
+                  </h2>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    {selectedAchievement.description}
+                  </p>
                   
                   {/* Rarity and Points */}
                   <div className="flex items-center justify-center space-x-4 mb-6">
@@ -491,7 +493,7 @@ const Achievements = ({ userProfile }) => {
                       <div className="text-xs text-gray-500">Rarity</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-sm font-semibold text-gray-900">{selectedAchievement.points}</div>
+                      <div className="text-sm font-semibold text-gray-900 dark:text-white">{selectedAchievement.points}</div>
                       <div className="text-xs text-gray-500">Points</div>
                     </div>
                   </div>
@@ -503,10 +505,10 @@ const Achievements = ({ userProfile }) => {
                     </div>
                   ) : (
                     <div>
-                      <div className="text-sm text-gray-600 mb-2">Progress: {selectedAchievement.progress}%</div>
-                      <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
+                      <div className="text-sm text-gray-600 dark:text-gray-300 mb-2">Progress: {selectedAchievement.progress}%</div>
+                      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-2">
                         <div 
-                          className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full"
+                          className="bg-gradient-to-r from-blue-500 to-purple-500 dark:from-blue-400 dark:to-purple-400 h-2 rounded-full"
                           style={{ width: `${selectedAchievement.progress}%` }}
                         />
                       </div>
