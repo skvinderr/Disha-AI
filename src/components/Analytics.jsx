@@ -19,6 +19,7 @@ import {
   RefreshCw
 } from 'lucide-react';
 import Skeleton from 'react-loading-skeleton';
+import "react-loading-skeleton/dist/skeleton.css";
 
 /**
  * Comprehensive Analytics Dashboard
@@ -194,7 +195,7 @@ const Analytics = ({ userProfile }) => {
             </div>
           </div>
           
-     <div className="px-4 py-2">
+  <div className="px-4 py-2">
   {learnerAnalytics.weeklyActivity.map((day, index) => (
     <div key={day.day} className="flex items-center space-x-4 mb-4">
       
@@ -208,7 +209,11 @@ const Analytics = ({ userProfile }) => {
         <div className="flex items-center space-x-2">
           <div className="flex-1 bg-gray-200 rounded-full h-3 overflow-hidden">
             {loading ? (
-              <Skeleton className="h-3 rounded-full" />
+              <Skeleton 
+                className="h-3 rounded-full w-full" 
+                baseColor="#e5e7eb" 
+                highlightColor="#f3f4f6" 
+              />
             ) : (
               <motion.div
                 className="bg-gradient-to-r from-purple-500 to-blue-500 h-3 rounded-full"
@@ -225,7 +230,11 @@ const Analytics = ({ userProfile }) => {
         <div className="flex items-center space-x-2 mt-2">
           <div className="flex-1 bg-gray-200 rounded-full h-3 overflow-hidden">
             {loading ? (
-              <Skeleton className="h-3 rounded-full" />
+              <Skeleton 
+                className="h-3 rounded-full w-full" 
+                baseColor="#e5e7eb" 
+                highlightColor="#f3f4f6" 
+              />
             ) : (
               <motion.div
                 className="bg-gradient-to-r from-blue-500 to-cyan-500 h-3 rounded-full"
@@ -242,6 +251,7 @@ const Analytics = ({ userProfile }) => {
     </div>
   ))}
 </div>
+
 
 
           
@@ -262,13 +272,16 @@ const Analytics = ({ userProfile }) => {
         
         {/* Skill Label */}
         <div className="w-20 text-sm font-medium text-gray-900">{skill.skill}</div>
-        
         {/* Progress Bar */}
         <div className="flex-1">
           <div className="flex items-center justify-between mb-1">
             <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
               {loading ? (
-                <Skeleton className="h-3 rounded-full w-full" />
+                <Skeleton 
+                className="h-3 rounded-full w-full" 
+                baseColor="#e5e7eb" 
+                highlightColor="#f3f4f6"  
+                 />
               ) : (
                 <motion.div 
                   className="bg-gradient-to-r from-green-500 to-emerald-500 h-3 rounded-full flex items-center justify-end pr-2"
