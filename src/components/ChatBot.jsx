@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { generateCareerResponse } from '../services/chatService';
 import Footer from './Footer';
+import Skeleton from 'react-loading-skeleton';
 
 const ChatBot = ({ userProfile }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -332,9 +333,10 @@ What would you like to explore first?`
                       </div>
                       <div className="bg-gray-100 p-3 rounded-2xl rounded-tl-md">
                         <div className="flex space-x-1">
-                          <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                          {/* <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
                           <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                          <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                          <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div> */}
+                          <Skeleton count={2}  width={80}/>
                         </div>
                       </div>
                     </motion.div>

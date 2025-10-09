@@ -14,12 +14,17 @@ import { useAuth } from '../hooks/useAuth';
 import { getUserProfile, generateCareerRecommendations } from '../services/userService';
 import CareerCard from './CareerCard';
 import RoadmapModal from './RoadmapModal';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+import CareerCardSkeleton from './CareerCardSkeleton';
+
 
 /**
  * Main dashboard component - the central hub for users
  * @param {Object} userProfile - The user profile data
  * @param {Function} onEditProfile - Callback to edit user profile
  */
+
 const Dashboard = ({ userProfile, onEditProfile }) => {
   const { user } = useAuth();
   const [isGeneratingRecommendations, setIsGeneratingRecommendations] = useState(false);
@@ -116,20 +121,18 @@ const Dashboard = ({ userProfile, onEditProfile }) => {
   /**
    * Render loading skeleton
    */
-  const renderLoadingSkeleton = () => (
-    <div className="space-y-6">
-      <div className="loading-skeleton h-8 w-64"></div>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {[1, 2, 3].map((i) => (
-          <div key={i} className="card">
-            <div className="loading-skeleton h-6 w-3/4 mb-3"></div>
-            <div className="loading-skeleton h-4 w-full mb-2"></div>
-            <div className="loading-skeleton h-4 w-5/6"></div>
-          </div>
-        ))}
-      </div>
+const renderLoadingSkeleton = () => (
+  <div className="space-y-4"> {/* ↓ smaller space */}
+    <div className="loading-skeleton h-8   w-64"></div> {/* ↓ smaller title */}
+    <div className="grid md:grid-cols-2 gap-8">
+      {[1, 2, 3, 4].map((i) => (
+        <div key={i} className="h-[200px] overflow-hidden">
+          <CareerCardSkeleton  key={i}/>
+        </div>
+      ))}
     </div>
-  );
+  </div>
+);
 
   /**
    * Render empty state when no recommendations
@@ -260,7 +263,7 @@ const Dashboard = ({ userProfile, onEditProfile }) => {
                 Your Recommended Career Paths
               </h2>
             </div>
-
+            {isGeneratingRecommendations && renderLoadingSkeleton()}    
             {!mockRecommendations && !currentProfile?.careerRecommendations && renderEmptyState()}
             
             {(mockRecommendations || currentProfile?.careerRecommendations) && (
@@ -326,5 +329,6 @@ const Dashboard = ({ userProfile, onEditProfile }) => {
     </div>
   );
 };
+
 
 export default Dashboard;

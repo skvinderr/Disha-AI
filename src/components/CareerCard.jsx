@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, CheckCircle, Target } from 'lucide-react';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+
 
 /**
  * Career card component for displaying individual career recommendations
@@ -46,8 +48,10 @@ const CareerCard = ({ career, onClick, userSkills = [] }) => {
       {/* Career Title */}
       <div className="flex items-start justify-between mb-3">
         <h3 className="text-lg font-semibold text-gray-900 group-hover:text-primary-700 transition-colors leading-tight">
-          {career.title}
+          
+           {career.title || <Skeleton/>}
         </h3>
+
         <ArrowRight className="h-5 w-5 text-gray-400 group-hover:text-primary-500 group-hover:translate-x-1 transition-all flex-shrink-0 mt-1" />
       </div>
 

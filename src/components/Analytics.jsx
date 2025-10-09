@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   BarChart3, 
@@ -18,6 +18,7 @@ import {
   Filter,
   RefreshCw
 } from 'lucide-react';
+import Skeleton from 'react-loading-skeleton';
 
 /**
  * Comprehensive Analytics Dashboard
@@ -26,6 +27,14 @@ import {
 const Analytics = ({ userProfile }) => {
   const [viewMode, setViewMode] = useState('learner'); // 'learner' or 'recruiter'
   const [timeRange, setTimeRange] = useState('month'); // 'week', 'month', 'quarter', 'year'
+
+  // To Hold the loading state
+  const [loading, setLoading] = useState(true);
+  // To simulate loading state
+  useEffect(() => {
+  const timer = setTimeout(() => setLoading(false), 1500); // 1.5s loading
+  return () => clearTimeout(timer);
+}, []);
 
   // Mock analytics data
   const learnerAnalytics = {
@@ -185,74 +194,105 @@ const Analytics = ({ userProfile }) => {
             </div>
           </div>
           
-          <div className="space-y-4">
-            {learnerAnalytics.weeklyActivity.map((day, index) => (
-              <div key={day.day} className="flex items-center space-x-4">
-                <div className="w-12 text-sm font-medium text-gray-600">{day.day}</div>
-                <div className="flex-1">
-                  <div className="flex items-center space-x-2 mb-1">
-                    <div className="flex-1 bg-gray-200 rounded-full h-2">
-                      <motion.div 
-                        className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full"
-                        initial={{ width: 0 }}
-                        animate={{ width: `${(day.hours / 5) * 100}%` }}
-                        transition={{ duration: 1, delay: 0.8 + index * 0.1 }}
-                      />
-                    </div>
-                    <span className="text-sm text-gray-600">{day.hours}h</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="flex-1 bg-gray-200 rounded-full h-2">
-                      <motion.div 
-                        className="bg-gradient-to-r from-blue-500 to-cyan-500 h-2 rounded-full"
-                        initial={{ width: 0 }}
-                        animate={{ width: `${(day.xp / 420) * 100}%` }}
-                        transition={{ duration: 1, delay: 1 + index * 0.1 }}
-                      />
-                    </div>
-                    <span className="text-sm text-gray-600">{day.xp} XP</span>
-                  </div>
-                </div>
-              </div>
-            ))}
+     <div className="px-4 py-2">
+  {learnerAnalytics.weeklyActivity.map((day, index) => (
+    <div key={day.day} className="flex items-center space-x-4 mb-4">
+      
+      {/* Day Label */}
+      <div className="w-14 text-sm font-medium text-gray-600 text-right">{day.day}</div>
+      
+      {/* Bars */}
+      <div className="flex-1">
+        
+        {/* Hours Bar */}
+        <div className="flex items-center space-x-2">
+          <div className="flex-1 bg-gray-200 rounded-full h-3 overflow-hidden">
+            {loading ? (
+              <Skeleton className="h-3 rounded-full" />
+            ) : (
+              <motion.div
+                className="bg-gradient-to-r from-purple-500 to-blue-500 h-3 rounded-full"
+                initial={{ width: 0 }}
+                animate={{ width: `${(day.hours / 5) * 100}%` }}
+                transition={{ duration: 1, delay: 0.8 + index * 0.1 }}
+              />
+            )}
           </div>
+          {!loading && <span className="text-sm text-gray-600 w-12 text-right">{day.hours}h</span>}
+        </div>
+
+        {/* XP Bar with exact gap */}
+        <div className="flex items-center space-x-2 mt-2">
+          <div className="flex-1 bg-gray-200 rounded-full h-3 overflow-hidden">
+            {loading ? (
+              <Skeleton className="h-3 rounded-full" />
+            ) : (
+              <motion.div
+                className="bg-gradient-to-r from-blue-500 to-cyan-500 h-3 rounded-full"
+                initial={{ width: 0 }}
+                animate={{ width: `${(day.xp / 420) * 100}%` }}
+                transition={{ duration: 1, delay: 1 + index * 0.1 }}
+              />
+            )}
+          </div>
+          {!loading && <span className="text-sm text-gray-600 w-12 text-right">{day.xp} XP</span>}
+        </div>
+
+      </div>
+    </div>
+  ))}
+</div>
+
+
+          
         </motion.div>
 
         {/* Skill Progress */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7 }}
-          className="bg-white rounded-2xl p-6 border border-gray-200"
-        >
-          <h3 className="text-xl font-bold text-gray-900 mb-6">Skill Proficiency</h3>
-          
-          <div className="space-y-4">
-            {learnerAnalytics.skillProgress.map((skill, index) => (
-              <div key={skill.skill} className="flex items-center space-x-4">
-                <div className="w-20 text-sm font-medium text-gray-900">{skill.skill}</div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between mb-1">
-                    <div className="w-full bg-gray-200 rounded-full h-3">
-                      <motion.div 
-                        className="bg-gradient-to-r from-green-500 to-emerald-500 h-3 rounded-full flex items-center justify-end pr-2"
-                        initial={{ width: 0 }}
-                        animate={{ width: `${skill.proficiency}%` }}
-                        transition={{ duration: 1, delay: 0.9 + index * 0.1 }}
-                      >
-                        <span className="text-xs text-white font-semibold">{skill.proficiency}%</span>
-                      </motion.div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-1 text-green-600">
-                  <TrendingUp className="h-4 w-4" />
-                  <span className="text-sm font-semibold">+{skill.change}%</span>
-                </div>
-              </div>
-            ))}
+    <motion.div
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.7 }}
+  className="bg-white rounded-2xl p-6 border border-gray-200"
+>
+  <h3 className="text-xl font-bold text-gray-900 mb-6">Skill Proficiency</h3>
+  
+  <div className="space-y-4">
+    {learnerAnalytics.skillProgress.map((skill, index) => (
+      <div key={skill.skill} className="flex items-center space-x-4">
+        
+        {/* Skill Label */}
+        <div className="w-20 text-sm font-medium text-gray-900">{skill.skill}</div>
+        
+        {/* Progress Bar */}
+        <div className="flex-1">
+          <div className="flex items-center justify-between mb-1">
+            <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+              {loading ? (
+                <Skeleton className="h-3 rounded-full w-full" />
+              ) : (
+                <motion.div 
+                  className="bg-gradient-to-r from-green-500 to-emerald-500 h-3 rounded-full flex items-center justify-end pr-2"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${skill.proficiency}%` }}
+                  transition={{ duration: 1, delay: 0.9 + index * 0.1 }}
+                >
+                  <span className="text-xs text-white font-semibold">{skill.proficiency}%</span>
+                </motion.div>
+              )}
+            </div>
           </div>
-        </motion.div>
+        </div>
+        
+        {/* Change Indicator */}
+        <div className="flex items-center space-x-1 text-green-600">
+          <TrendingUp className="h-4 w-4" />
+          <span className="text-sm font-semibold">+{skill.change}%</span>
+        </div>
+      </div>
+    ))}
+  </div>
+</motion.div>
+
       </div>
 
       {/* Learning Paths Progress */}

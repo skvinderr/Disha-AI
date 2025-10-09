@@ -1,6 +1,7 @@
 {
   "projects": {
-    "catechol": "attendwise-tracker-app"
+    "catechol": "attendwise-tracker-app",
+    "attendwise-tracker-app": "attendwise-tracker-app-9cd80"
   },
   "targets": {},
   "etags": {}
