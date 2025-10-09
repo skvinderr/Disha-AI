@@ -234,7 +234,8 @@ What would you like to explore first?`
             style={{ width: '380px' }}
           >
             {/* Chat Header */}
-            <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-4">
+            <div className={`bg-gradient-to-r  z-50 fixed rounded-2xl  from-purple-600 to-blue-600 text-white p-1 w-[380px]`}>
+              
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <div className="relative">
